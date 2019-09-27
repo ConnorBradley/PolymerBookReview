@@ -40,6 +40,13 @@ $_documentContainer.innerHTML = `<dom-module id="shared-styles">
         color: #212121;
         font-size: 22px;
       }
+
+      .bookCover {
+        height: 300px;
+        overflow: hidden;
+        object-fit: cover;
+        width: 100%;
+      }
     </style>
   </template>
 </dom-module>`;
