@@ -84,7 +84,7 @@ class MyApp extends PolymerElement {
         <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
           <app-toolbar>Menu</app-toolbar>
           <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-            <a name="BookReview" href="[[rootPath]]BookReview">View One</a>
+            <a name="BookReviewSection" href="[[rootPath]]BookReviewSection">Book Review Section</a>
             <a name="view2" href="[[rootPath]]view2">View Two</a>
             <a name="view3" href="[[rootPath]]view3">View Three</a>
           </iron-selector>
@@ -101,8 +101,7 @@ class MyApp extends PolymerElement {
           </app-header>
 
           <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
-            <book-review name="BookReview"></book-review>
-            <book-review name="BookReview"></book-review>
+            <book-review-section name="BookReviewSection"></book-review-section>
             <my-view2 name="view2"></my-view2>
             <my-view3 name="view3"></my-view3>
             <my-view404 name="view404"></my-view404>
@@ -136,8 +135,8 @@ class MyApp extends PolymerElement {
      // If no page was found in the route data, page will be an empty string.
      // Show 'BookReview' in that case. And if the page doesn't exist, show 'view404'.
     if (!page) {
-      this.page = 'BookReview';
-    } else if (['BookReview', 'view2', 'view3'].indexOf(page) !== -1) {
+      this.page = 'BookReviewSection';
+    } else if (['BookReviewSection', 'view2', 'view3'].indexOf(page) !== -1) {
       this.page = page;
     } else {
       this.page = 'view404';
@@ -155,8 +154,8 @@ class MyApp extends PolymerElement {
     // Note: `polymer build` doesn't like string concatenation in the import
     // statement, so break it up.
     switch (page) {
-      case 'BookReview':
-        import('./book-review.js');
+      case 'BookReviewSection':
+        import('./book-review-section.js');
         break;
       case 'view2':
         import('./my-view2.js');

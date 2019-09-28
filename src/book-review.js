@@ -18,9 +18,9 @@ class BookReview extends PolymerElement {
 
   static get properties() {
     return {
+      isbn: String,
       Title: { type: String },
       Author: { type: String },
-      ISBN: { type: String },
       Rating: { type: String },
       Image: { type: String },
       Description: { type: String },
@@ -28,6 +28,20 @@ class BookReview extends PolymerElement {
     };
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    debugger;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "https://localhost:44381/api/books/" + this.isbn, false ); // false for synchronous request
+    xmlHttp.send( null );
+    var book = JSON.parse(xmlHttp.responseText);
+    this.Author = book.Author;
+    this.Image = book.image_url;
+    this.Title = book.Name;
+    this.Description = book.Description;
+    this.Rating = book.Rating;
+  
+  }
 
   static get template() {
     return html`
@@ -38,36 +52,16 @@ class BookReview extends PolymerElement {
           padding: 10px;
         }
       </style>
- 
-    <iron-ajax
-          auto
-          url="https://localhost:44381/api/books/0061177571"
-          handle-as="json"
-          on-response="handleResponse"
-          debounce-duration="300">
-      </iron-ajax>
-      
-    <paper-card heading="{{Title}}" alt="Post Office">
-        <img class="bookCover" src="{{Image}}">
+      <paper-card heading="{{Title}}" image="{{Image}}" alt="Post Office">
           <div class="card-content">
-            {{Description}}
+          {{Author}}
           </div>
           <div class="card-actions">
+            {{Description}}
+            <p>Rating: [[Rating]]</p>
           </div>
-    </paper-card>
+      </paper-card>
     `;
-  }
-
-  handleResponse(event, request) {
-    var response = JSON.parse(request.response);
-    console.log(response);
-    debugger;
-    this.Author = response.Author;
-    this.ISBN = response.ISBN;
-    this.Image = response.image_url;
-    this.Title = response.Name;
-    this.Description = response.Description;
-    
   }
 }
 
